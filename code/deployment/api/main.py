@@ -56,7 +56,6 @@ class PredictionRequest(BaseModel):
     marking: int
     standing_tackle: int
     sliding_tackle: int
-    birth_year: int
 
 
 @app.post("/predict")
@@ -102,7 +101,6 @@ async def predict(request: PredictionRequest):
         request.marking,
         request.standing_tackle,
         request.sliding_tackle,
-        request.birth_year,
     ]])
     try:
         prediction = model.predict(features)
@@ -155,7 +153,6 @@ async def predict_example(
             marking=33,
             standing_tackle=28,
             sliding_tackle=26,
-            birth_year=1987
                 )):
     # features = np.array(request)
     # print(features)
@@ -201,7 +198,6 @@ async def predict_example(
         request.marking,
         request.standing_tackle,
         request.sliding_tackle,
-        request.birth_year,
     ]])
 
     # Ensure the shape of the array is (1, num_features) as expected by your model
