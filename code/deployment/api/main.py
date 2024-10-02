@@ -2,15 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pickle
 import numpy as np
-import os
-# os.environ["PROJECTDIR"] = r"C:\Users\79133\PMLDL_A1"
-# path = os.getenv("PROJECTDIR")
-# print(path)
-# PROJECTDIR = os.getenv('PROJECTDIR', '/code')  # Default to '/code' if not set
-
-# Load the model using the PROJECTDIR
-# model_path = os.path.join(PROJECTDIR, 'models/FIFA_rating_prediction.pkl')
-with open("FIFA_rating_prediction.pkl", "rb") as f:
+with open("models/FIFA_rating_prediction.pkl", "rb") as f:
     model = pickle.load(f)
 
 app = FastAPI()
@@ -60,7 +52,6 @@ class PredictionRequest(BaseModel):
 
 @app.post("/predict")
 async def predict(request: PredictionRequest):
-    # features = np.array(request.features).reshape(1, -1)
     features = np.array([[
         request.age,
         request.weight_kgs,
@@ -106,7 +97,6 @@ async def predict(request: PredictionRequest):
         prediction = model.predict(features)
 
         return{"Predicted rating of the player:" : prediction[0]}
-        # return {"zhopa"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

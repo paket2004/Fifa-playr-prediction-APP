@@ -1,19 +1,17 @@
 FROM python:3.9
 
 # Set the working directory in the container
-WORKDIR /code
+WORKDIR /api
 
 # Copy the requirements file into the container
-COPY requirements.txt /code/requirements.txt
+COPY code/deployment/api /api
 
 # Install the dependencies
-RUN pip install --upgrade -r /code/requirements.txt
+RUN pip install --upgrade -r /api/requirements.txt
 
-# Copy the application code from api folder into the container
-#COPY . /code/api
 
 # Copy the models from the parent folder (deployment) into the container
-COPY .. /code
+COPY code/models /api/models
 
 # Command to run the application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

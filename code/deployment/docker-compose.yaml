@@ -3,17 +3,17 @@ version: '3.8'
 services:
   fastapi:
     build:
-      context: ./api  # Path to FastAPI Dockerfile
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: code/deployment/api/Dockerfile
     ports:
-      - "80:80"  # Expose FastAPI on port 8000
+      - "80:80"
     networks:
       - app-network
 
   streamlit:
     build:
-      context: ./app  # Path to Streamlit Dockerfile
-      dockerfile: Dockerfile
+      context: .  # Path to Streamlit Dockerfile
+      dockerfile: code/deployment/app/Dockerfile
     ports:
       - "8501:8501"  # Expose Streamlit on port 8501
     depends_on:
